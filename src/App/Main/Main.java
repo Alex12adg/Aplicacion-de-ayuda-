@@ -29,7 +29,7 @@ public class Main {
         Notification notification = new Notification(message, triggerTime);
         scheduler.schedule(notification);
 
-        System.out.println("✔ Recordatorio programado correctamente.");
+        System.out.println("Recordatorio programado correctamente.");
         System.out.println("La aplicación debe permanecer abierta.");
     }
 }

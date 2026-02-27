@@ -37,7 +37,7 @@ public class EmergencyManager {
             if (!centers.isEmpty()) {
                 System.out.println("\n=== SERVICIOS DE EMERGENCIA EN LA ZONA ===");
                 for (EmergencyCenter c : centers) {
-                    System.out.println("✔ " + c.getType() + " -> " + c.getName());
+                    System.out.println(c.getType() + " -> " + c.getName());
                 }
             }
 

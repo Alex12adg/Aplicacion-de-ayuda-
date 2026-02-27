@@ -1,4 +1,0 @@
-hospital|Hospital General|40.42030|-3.70577|Hospital público 24h
-comisaria|Comisaría Centro|40.41678|-3.70379|Policía local
-puesto_socorro|Puesto Socorro Playa Norte|40.43000|-3.70000|Socorristas temporada
-ambulancia|Base Ambulancias Norte|40.44500|-3.68000|Base ambulancias local
