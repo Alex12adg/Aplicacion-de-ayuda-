@@ -1,0 +1,13 @@
+{
+  "error": "Datos de entrada inválidos",
+  "detalles": [
+    {
+      "campo": "fecha",
+      "mensaje": "La fecha debe ser posterior a hoy"
+    },
+    {
+      "campo": "numero_plazas",
+      "mensaje": "Debe ser mayor que 0"
+    }
+  ]
+}

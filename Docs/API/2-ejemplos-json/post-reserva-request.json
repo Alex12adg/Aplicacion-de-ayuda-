@@ -1,0 +1,22 @@
+[
+  {
+    "id_recurso": 5,
+    "id_reserva_local": 123,
+    "fecha": "2026-03-15",
+    "hora_inicio": "10:00:00",
+    "hora_fin": "12:00:00",
+    "numero_plazas": 4,
+    "coste": 150.00,
+    "motivo": "Reunión trimestral del equipo"
+  },
+  {
+    "id_recurso": 2,
+    "id_reserva_local": 98,
+    "fecha": "2026-02-20",
+    "hora_inicio": "08:00:00",
+    "hora_fin": "09:00:00",
+    "numero_plazas": 2,
+    "coste": 50.00,
+    "motivo": "Tutoría"
+  }
+]
