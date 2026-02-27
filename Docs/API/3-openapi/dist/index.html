@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rick and Morty API - Swagger UI</title>
+  <link rel="stylesheet" type="text/css" href="./swagger-ui-dist/swagger-ui.css" />
+  <link rel="icon" type="image/png" href="./swagger-ui-dist/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="./swagger-ui-dist/favicon-16x16.png" sizes="16x16" />
+  <style>
+    html
+    {
+      box-sizing: border-box;
+      overflow: -moz-scrollbars-vertical;
+      overflow-y: scroll;
+    }
+    *,
+    *:before,
+    *:after
+    {
+      box-sizing: inherit;
+    }
+
+    body
+    {
+      margin:0;
+      background: #fafafa;
+    }
+  </style>
+</head>
+<body>
+<div id="swagger-ui"></div>
+
+<script src="./swagger-ui-dist/swagger-ui-bundle.js" charset="UTF-8"> </script>
+<script src="./swagger-ui-dist/swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
+<script>
+  window.onload = function() {
+    // Begin Swagger UI call region
+    const ui = SwaggerUIBundle({
+      spec: {
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Sistema de Reservas API",
+    "version": "1.0.0",
+    "description": "API para consultar recursos y gestionar reservas de usuarios."
+  },
+  "servers": [
+    {
+      "url": "https://api.sistemareservas.es/v1",
+      "description": "Servidor principal del sistema de reservas"
+    }
+  ],
+  "paths": {
+    "/usuarios/{id_usuario}": {
+      "get": {
+        "summary": "Obtener un usuario por ID",
+        "description": "Recupera la información básica de un usuario.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_usuario",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID del usuario."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuario encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Usuario"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuario no encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Usuario no encontrado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        }
+      }
+    },
+    "/recursos/{id_recurso}": {
+      "get": {
+        "summary": "Obtener un recurso por ID",
+        "description": "Recupera los detalles de un recurso específico.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_recurso",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID del recurso."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recurso encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recurso"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso no encontrado."
+          }
+        }
+      }
+    },
+    "/reservas/{id_recurso}/{id_reserva_local}": {
+      "get": {
+        "summary": "Obtener una reserva específica",
+        "description": "Recupera los detalles de una reserva usando su clave compuesta.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_recurso",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "path",
+            "name": "id_reserva_local",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reserva encontrada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reserva"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Reserva no encontrada."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Cancelar una reserva",
+        "description": "Elimina una reserva existente.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_recurso",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "path",
+            "name": "id_reserva_local",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Reserva cancelada correctamente."
+          },
+          "404": {
+            "description": "Reserva no encontrada."
+          }
+        }
+      }
+    },
+    "/reservas": {
+      "post": {
+        "summary": "Crear una nueva reserva",
+        "description": "Registra una nueva reserva en el sistema.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReservaInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Reserva creada correctamente.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reserva"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos inválidos."
+          },
+          "409": {
+            "description": "Conflicto de horario o capacidad."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Usuario": {
+        "type": "object",
+        "properties": {
+          "id_usuario": {
+            "type": "integer",
+            "description": "Identificador del usuario.",
+            "example": 6
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del usuario.",
+            "example": "Alejandro"
+          },
+          "correo_electronico": {
+            "type": "string",
+            "format": "email",
+            "description": "Correo electrónico del usuario.",
+            "example": "alejandro@mail.com"
+          }
+        }
+      },
+      "Recurso": {
+        "type": "object",
+        "properties": {
+          "id_recurso": {
+            "type": "integer",
+            "description": "Identificador del recurso.",
+            "example": 1
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del recurso.",
+            "example": "Aula 1"
+          },
+          "ubicacion": {
+            "type": "string",
+            "description": "Ubicación física del recurso.",
+            "example": "Edificio A"
+          },
+          "capacidad": {
+            "type": "integer",
+            "description": "Capacidad máxima del recurso.",
+            "example": 30
+          }
+        }
+      },
+      "Reserva": {
+        "type": "object",
+        "properties": {
+          "id_recurso": {
+            "type": "integer",
+            "description": "Recurso reservado.",
+            "example": 1
+          },
+          "id_reserva_local": {
+            "type": "integer",
+            "description": "Identificador local de la reserva.",
+            "example": 2
+          },
+          "id_usuario": {
+            "type": "integer",
+            "description": "Usuario que realiza la reserva.",
+            "example": 6
+          },
+          "fecha": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-02-10"
+          },
+          "hora_inicio": {
+            "type": "string",
+            "example": "08:00:00"
+          },
+          "hora_fin": {
+            "type": "string",
+            "example": "10:00:00"
+          },
+          "numero_plazas": {
+            "type": "integer",
+            "example": 5
+          },
+          "coste": {
+            "type": "number",
+            "format": "float",
+            "example": 15
+          },
+          "motivo": {
+            "type": "string",
+            "example": "Clase"
+          },
+          "observaciones": {
+            "type": "string",
+            "example": "Necesita proyector"
+          }
+        }
+      },
+      "ReservaInput": {
+        "type": "object",
+        "required": [
+          "id_recurso",
+          "id_usuario",
+          "fecha",
+          "hora_inicio",
+          "hora_fin"
+        ],
+        "properties": {
+          "id_recurso": {
+            "type": "integer"
+          },
+          "id_usuario": {
+            "type": "integer"
+          },
+          "fecha": {
+            "type": "string",
+            "format": "date"
+          },
+          "hora_inicio": {
+            "type": "string"
+          },
+          "hora_fin": {
+            "type": "string"
+          },
+          "numero_plazas": {
+            "type": "integer"
+          },
+          "motivo": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}, // Path to your OpenAPI YAML file
+      dom_id: '#swagger-ui',
+      deepLinking: true,
+      presets: [
+        SwaggerUIBundle.presets.apis,
+        SwaggerUIStandalonePreset
+      ],
+      plugins: [
+        SwaggerUIBundle.plugins.DownloadUrl
+      ],
+      layout: "StandaloneLayout"
+    });
+    // End Swagger UI call region
+
+    window.ui = ui;
+  };
+</script>
+</body>
+</html>

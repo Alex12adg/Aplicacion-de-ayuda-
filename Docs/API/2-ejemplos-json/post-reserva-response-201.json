@@ -1,0 +1,12 @@
+{
+  "id_recurso": 5,
+  "id_reserva_local": 123,
+  "id_usuario": 42,
+  "fecha": "2026-03-15",
+  "hora_inicio": "10:00:00",
+  "hora_fin": "12:00:00",
+  "numero_plazas": 4,
+  "coste": 150.00,
+  "motivo": "Reunión trimestral del equipo",
+  "observaciones": "Necesita proyector"
+}
