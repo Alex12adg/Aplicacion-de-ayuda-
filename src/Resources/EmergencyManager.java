@@ -1,12 +1,11 @@
 package Resources;
-
 import java.util.List;
 
 public class EmergencyManager {
 
     public void startSystemInteractive() {
 
-        // 🔹 Cargar centros de emergencia desde JSON
+        //Cargar centros de emergencia desde JSON
         List<EmergencyCenter> centers = JsonDataLoader.loadCenters("SRC/Resources/centers.json");
 
         System.out.println("======================================");
@@ -14,7 +13,7 @@ public class EmergencyManager {
         System.out.println("======================================");
 
         if (centers.isEmpty()) {
-            System.out.println("⚠ No se han podido cargar centros desde el JSON.");
+            System.out.println("No se han podido cargar centros desde el JSON.");
         } else {
             for (EmergencyCenter c : centers) {
                 System.out.println(" - " + c);
@@ -25,7 +24,7 @@ public class EmergencyManager {
         System.out.println("   SISTEMA DE DETECCIÓN DE EMERGENCIAS");
         System.out.println("======================================");
 
-        // 🔹 Sistema actual
+        //Sistema actual
         EmergencyDetector detector = new EmergencyDetector(5);
         EmergencyEvent event = detector.detectEventInteractive();
 
@@ -33,7 +32,7 @@ public class EmergencyManager {
             AlertSender sender = new AlertSender();
             sender.sendAlert(event);
 
-            // 🔹 Mostrar servicios útiles tras la emergencia
+            //Mostrar servicios útiles tras la emergencia
             if (!centers.isEmpty()) {
                 System.out.println("\n=== SERVICIOS DE EMERGENCIA EN LA ZONA ===");
                 for (EmergencyCenter c : centers) {
@@ -45,5 +44,26 @@ public class EmergencyManager {
             System.out.println("No se activó ninguna emergencia.");
         }
     }
-}
 
+    public void triggerVoiceEmergency() {
+
+        System.out.println("Activación de emergencia mediante voz.");
+
+        UserData user = new UserData(
+                "Usuario",
+                "000000000",
+                "propietario"
+        );
+
+        EmergencyEvent event = new EmergencyEvent(
+                "Activación por palabra clave",
+                "Ubicación desconocida",
+                user,
+                3
+        );
+
+        AlertSender sender = new AlertSender();
+
+        sender.sendAlert(event);
+    }
+}
