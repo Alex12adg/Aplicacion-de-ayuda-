@@ -1,7 +1,5 @@
 package App.Main;
-
 import Resources.*;
-
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
@@ -27,7 +25,8 @@ public class Main {
             System.out.println("2. Programar recordatorio");
             System.out.println("3. Activar detección de voz (simulada)");
             System.out.println("4. Cambiar palabra clave de voz");
-            System.out.println("5. Salir");
+            System.out.println("5. Sistema de peligro inminente");
+            System.out.println("6. Salir");
 
             System.out.print("Selecciona una opción: ");
 
@@ -93,11 +92,17 @@ public class Main {
 
                 case 5:
 
+                    DangerAlertSystem dangerAlertSystem = new DangerAlertSystem();
+                    System.out.println("Activar alerta de peligro inminente");
+                    dangerAlertSystem.activateAlert(manager);
+                    break;
+
+                case 6:
+
                     System.out.println("Cerrando sistema...");
                     running = false;
 
                     break;
-
                 default:
 
                     System.out.println("Opción no válida.");
