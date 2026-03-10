@@ -1,0 +1,15 @@
+Index: src/Resources/DangerAlertSystem.java
+===================================================================
+diff --git a/src/Resources/DangerAlertSystem.java b/src/Resources/Emergency/DangerAlertSystem.java
+rename from src/Resources/DangerAlertSystem.java
+rename to src/Resources/Emergency/DangerAlertSystem.java
+--- a/src/Resources/DangerAlertSystem.java	(revision b2437b5a28ea828bc03884add55cfcfe1ce61aff)
++++ b/src/Resources/Emergency/DangerAlertSystem.java	(date 1773152083085)
+@@ -1,4 +1,6 @@
+-package Resources;
++package Resources.Emergency;
++
++import Resources.User.UserData;
+ 
+ import java.util.Scanner;
+ 
