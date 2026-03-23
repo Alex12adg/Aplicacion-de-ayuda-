@@ -1,0 +1,65 @@
+.root {
+    -fx-font-family: "Segoe UI";
+    -fx-background-color: #f5f5f5;
+}
+
+/* TOP BAR */
+
+.top-bar {
+    -fx-background-color: white;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* USERNAME */
+
+.username-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+
+/* SETTINGS BUTTON */
+
+.settings-button {
+    -fx-background-color: transparent;
+    -fx-font-size: 16px;
+}
+
+/* SIDE MENU */
+
+.side-menu {
+    -fx-background-color: #ffffff;
+    -fx-pref-width: 200px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-width: 0 1 0 0;
+}
+
+/* MENU BUTTONS */
+
+.menu-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #374151;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 10 10 10;
+    -fx-pref-width: 180px;
+    -fx-background-radius: 8;
+}
+
+.menu-button:hover {
+    -fx-background-color: #f3f4f6;
+}
+
+/* CONTENIDO */
+
+.content-area {
+    -fx-background-color: #f9fafb;
+}
+
+/* TITULOS */
+
+.title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
