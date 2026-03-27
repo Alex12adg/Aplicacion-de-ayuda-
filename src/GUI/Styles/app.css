@@ -63,3 +63,12 @@
     -fx-font-weight: bold;
     -fx-text-fill: #111827;
 }
+
+.main-content {
+    -fx-background-color: white;
+}
+
+.settings-button {
+    -fx-background-color: transparent;
+    -fx-font-size: 16px;
+}

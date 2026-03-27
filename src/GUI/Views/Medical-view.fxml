@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="GUI.controllers.MedicalController"
+      spacing="15"
+      alignment="TOP_LEFT"
+      styleClass="main-content"
+      padding="20">
+
+    <Label text="Historial Médico"
+           styleClass="title"/>
+
+    <TextArea fx:id="medicalInfo"
+              editable="false"
+              prefHeight="400"
+              wrapText="true"/>
+
+</VBox>

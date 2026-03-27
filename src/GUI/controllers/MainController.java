@@ -70,9 +70,31 @@ public class MainController {
 
         try {
 
-            Parent view = FXMLLoader.load(
-                    getClass().getResource("/GUI/Views/" + fxml)
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/GUI/views/" + fxml)
             );
+
+            Parent view = loader.load();
+
+            // Obtener controller de la vista
+            Object controller = loader.getController();
+
+            // Inyectar dependencias si aplica
+            if (controller instanceof EmergencyController) {
+                ((EmergencyController) controller).setEmergencyManager(emergencyManager);
+            }
+
+            if (controller instanceof VoiceController) {
+                ((VoiceController) controller).setVoiceDetector(voiceDetector, emergencyManager);
+            }
+
+            if (controller instanceof DangerController) {
+                ((DangerController) controller).setDangerSystem(dangerSystem, emergencyManager);
+            }
+
+            if (controller instanceof HealthController) {
+                ((HealthController) controller).setHeartMonitor(heartMonitor);
+            }
 
             contentArea.getChildren().clear();
             contentArea.getChildren().add(view);
@@ -115,6 +137,11 @@ public class MainController {
     @FXML
     private void loadCenters() {
         loadView("Centers-view.fxml");
+    }
+
+    @FXML
+    private void loadMedical() {
+        loadView("medical-view.fxml");
     }
 
     // =========================

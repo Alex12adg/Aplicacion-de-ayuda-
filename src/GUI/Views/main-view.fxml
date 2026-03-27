@@ -30,10 +30,11 @@
             <!-- BOTON CONFIGURACION -->
             <MenuButton styleClass="settings-button">
                 <items>
-                    <MenuItem text="Perfil" />
-                    <MenuItem text="Gestión de alergias" />
-                    <MenuItem text="Configuración" />
-                    <MenuItem text="Cerrar sesión" />
+                    <MenuItem text="Perfil"/>
+                    <MenuItem text="Configuración"/>
+                    <MenuItem text="Historial médico"
+                                  onAction="#loadMedical"/>
+                    <MenuItem text="Cerrar sesión"/>
                 </items>
             </MenuButton>
 

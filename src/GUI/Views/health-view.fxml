@@ -3,9 +3,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<StackPane xmlns="http://javafx.com/javafx"
-           xmlns:fx="http://javafx.com/fxml">
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="GUI.controllers.HealthController"
+      alignment="CENTER" spacing="20">
 
-    <Label text="Sistema de salud"/>
+    <Label text="Monitor de salud"/>
 
-</StackPane>
+    <Button text="Iniciar monitor"
+            onAction="#handleStartMonitoring"/>
+
+</VBox>
