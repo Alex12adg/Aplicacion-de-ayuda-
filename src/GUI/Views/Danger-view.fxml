@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="GUI.controllers.DangerController"
-      alignment="CENTER" spacing="20">
+<ScrollPane fitToWidth="true"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="GUI.controllers.DangerController">
 
-    <Label text="Alerta de peligro"/>
+    <content>
+        <VBox alignment="CENTER" spacing="20">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
 
-    <Button text="Activar alerta"
-            onAction="#handleDangerAlert"/>
+            <Label text="Alerta de peligro"/>
 
-</VBox>
+            <Button text="Activar alerta"
+                    onAction="#handleDangerAlert"/>
+        </VBox>
+    </content>
+
+</ScrollPane>

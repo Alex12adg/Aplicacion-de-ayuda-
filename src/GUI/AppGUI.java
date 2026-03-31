@@ -11,7 +11,7 @@ public class AppGUI extends Application {
     public void start(Stage stage) throws Exception {
 
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/GUI/views/main-view.fxml")
+                getClass().getResource("/GUI/Views/Login-view.fxml")
         );
 
         Scene scene = new Scene(loader.load(), 800, 500);

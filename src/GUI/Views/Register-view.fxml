@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="GUI.controllers.RegisterController">
+
+    <content>
+        <VBox alignment="CENTER" spacing="10">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label text="Registro"/>
+
+            <TextField fx:id="nameField" promptText="Nombre"/>
+            <TextField fx:id="phoneField" promptText="Telefono"/>
+            <TextField fx:id="emailField" promptText="Email"/>
+            <PasswordField fx:id="passwordField" promptText="Contrasena"/>
+
+            <Button text="Registrarse" onAction="#handleRegister"/>
+            <Button text="Volver al login" onAction="#goToLogin"/>
+
+            <Label fx:id="statusLabel"/>
+        </VBox>
+    </content>
+
+</ScrollPane>

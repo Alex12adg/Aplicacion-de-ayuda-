@@ -2,6 +2,8 @@ package Resources.Danger;
 
 import Resources.Emergency.*;
 import java.util.Scanner;
+
+import Resources.Session.UserSession;
 import Resources.User.*;
 
 public class DangerAlertSystem {
@@ -67,11 +69,12 @@ public class DangerAlertSystem {
 
     private void sendEmergencyAlert(EmergencyManager manager, String location) {
 
-        UserData user = new UserData(
-                "Usuario",
-                "000000000",
-                "propietario"
-        );
+        try {
+            UserData user = UserSession.getUser();
+
+            if (user == null) {
+                throw new Exception("No hay usuario en sesión");
+            }
 
         EmergencyEvent event = new EmergencyEvent(
                 "Peligro inminente",
@@ -83,5 +86,8 @@ public class DangerAlertSystem {
         AlertSender sender = new AlertSender();
 
         sender.sendAlert(event);
+        } catch (Exception e) {
+            System.out.println("Error al activar sistema de alerta: " + e.getMessage());
+        }
     }
 }

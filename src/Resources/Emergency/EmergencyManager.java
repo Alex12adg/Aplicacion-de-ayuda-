@@ -1,5 +1,6 @@
 package Resources.Emergency;
 import Resources.Data.JsonDataLoader;
+import Resources.Session.UserSession;
 import Resources.User.UserData;
 
 import java.util.List;
@@ -52,21 +53,25 @@ public class EmergencyManager {
 
         System.out.println("Activación de emergencia mediante voz.");
 
-        UserData user = new UserData(
-                "Usuario",
-                "000000000",
-                "propietario"
-        );
+        try {
+            UserData user = UserSession.getUser();
 
-        EmergencyEvent event = new EmergencyEvent(
-                "Activación por palabra clave",
-                "Ubicación desconocida",
-                user,
-                3
-        );
+            if (user == null) {
+                throw new Exception("No hay usuario en sesión");
+            }
 
-        AlertSender sender = new AlertSender();
+            EmergencyEvent event = new EmergencyEvent(
+                    "Activación por palabra clave",
+                    "Ubicación pendiente",
+                    user,
+                    3
+            );
 
-        sender.sendAlert(event);
+            AlertSender sender = new AlertSender();
+            sender.sendAlert(event);
+
+        } catch (Exception e) {
+            System.out.println("Error al activar emergencia: " + e.getMessage());
+        }
     }
 }

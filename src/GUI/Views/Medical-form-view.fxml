@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fitToWidth="true"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="GUI.controllers.MedicalFormController">
+
+    <content>
+        <VBox alignment="TOP_LEFT" spacing="10">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label text="Perfil medico y contactos de emergencia"/>
+
+            <HBox spacing="10">
+                <Button fx:id="editButton" text="Editar datos" onAction="#enableEditMode"/>
+                <Button fx:id="saveButton" text="Guardar cambios" onAction="#handleSave"/>
+            </HBox>
+
+            <Label text="Alergias"/>
+            <TextArea fx:id="allergiesField" prefRowCount="3" wrapText="true"/>
+
+            <Label text="Condiciones medicas"/>
+            <TextArea fx:id="conditionsField" prefRowCount="3" wrapText="true"/>
+
+            <Label text="Medicacion actual"/>
+            <TextArea fx:id="medicationsField" prefRowCount="3" wrapText="true"/>
+
+            <Label text="Contactos guardados"/>
+            <ListView fx:id="contactsList" prefHeight="140"/>
+
+            <Label text="Nuevo contacto"/>
+            <TextField fx:id="contactNameField" promptText="Nombre completo"/>
+            <TextField fx:id="contactPhoneField" promptText="Telefono"/>
+            <TextField fx:id="contactRelationField" promptText="Madre, padre, pareja, amigo..."/>
+
+            <Button fx:id="addContactButton" text="Anadir contacto" onAction="#handleAddContact"/>
+
+            <Label fx:id="statusLabel"/>
+        </VBox>
+    </content>
+
+</ScrollPane>

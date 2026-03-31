@@ -26,6 +26,18 @@
     -fx-font-size: 16px;
 }
 
+.menu-toggle-button {
+    -fx-background-color: transparent;
+    -fx-font-size: 20px;
+    -fx-text-fill: #111827;
+    -fx-padding: 6 10 6 10;
+}
+
+.menu-toggle-button:hover {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 8;
+}
+
 /* SIDE MENU */
 
 .side-menu {

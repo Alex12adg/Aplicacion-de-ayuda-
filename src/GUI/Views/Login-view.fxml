@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="GUI.controllers.LoginController">
+
+    <content>
+        <VBox alignment="CENTER" spacing="10">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label text="Login"/>
+
+            <TextField fx:id="userField" promptText="Usuario o Email"/>
+            <PasswordField fx:id="passwordField" promptText="Contraseña"/>
+
+            <Button text="Entrar" onAction="#handleLogin"/>
+            <Button text="Registrarse" onAction="#goToRegister"/>
+
+            <Label fx:id="statusLabel"/>
+        </VBox>
+    </content>
+
+</ScrollPane>
