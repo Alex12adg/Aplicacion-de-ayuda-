@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fitToWidth="true"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="GUI.controllers.SettingsController">
+
+    <content>
+        <VBox spacing="22" styleClass="module-page settings-page">
+            <padding>
+                <Insets top="24" right="24" bottom="24" left="24"/>
+            </padding>
+
+            <VBox spacing="18" styleClass="settings-hero">
+                <VBox spacing="8">
+                    <Label text="Configuracion" styleClass="home-hero-title"/>
+                    <Label text="Base visual preparada para futuras preferencias del sistema, accesibilidad, sensores, aspecto y comportamiento general." styleClass="home-hero-subtitle" wrapText="true"/>
+                </VBox>
+
+                <VBox spacing="10" styleClass="home-status-card">
+                    <Label text="Estado" styleClass="panel-title"/>
+                    <Label fx:id="settingsStatusLabel" wrapText="true"/>
+                </VBox>
+            </VBox>
+
+            <VBox spacing="16">
+                <VBox spacing="12" styleClass="panel-card">
+                    <Label text="Apariencia" styleClass="panel-title"/>
+                    <Label text="Aqui podran añadirse temas, densidad visual, tamaños y personalizacion de la interfaz." wrapText="true"/>
+                    <VBox spacing="8" styleClass="subtle-panel">
+                        <Label text="Pendiente de implementacion" styleClass="field-label"/>
+                        <Label text="El panel ya queda maquetado para incorporar estos controles sin rehacer la escena." wrapText="true"/>
+                    </VBox>
+                </VBox>
+
+                <VBox spacing="12" styleClass="panel-card">
+                    <Label text="Sistema y alertas" styleClass="panel-title"/>
+                    <Label text="Zona reservada para parametros de notificaciones, tiempos de espera, sensores y reglas internas." wrapText="true"/>
+                    <VBox spacing="8" styleClass="subtle-panel">
+                        <Label text="Pendiente de implementacion" styleClass="field-label"/>
+                        <Label text="La estructura actual permite crecer sin que la pantalla vuelva a parecer un placeholder." wrapText="true"/>
+                    </VBox>
+                </VBox>
+            </VBox>
+        </VBox>
+    </content>
+
+</ScrollPane>

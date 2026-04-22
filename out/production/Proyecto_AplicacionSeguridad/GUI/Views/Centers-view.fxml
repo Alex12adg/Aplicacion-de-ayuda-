@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="GUI.controllers.CentersController">
+
+    <content>
+        <VBox spacing="20" styleClass="module-page">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <VBox spacing="6">
+                <Label text="Centros cercanos" styleClass="module-title"/>
+                <Label text="Busca hospitales, policia, bomberos y otros centros disponibles alrededor de una ubicacion." styleClass="module-subtitle" wrapText="true"/>
+            </VBox>
+
+            <VBox spacing="18">
+                <VBox spacing="14" styleClass="panel-card">
+                    <Label text="Busqueda" styleClass="panel-title"/>
+                    <CheckBox fx:id="automaticLocationCheck" onAction="#updateLocationMode" text="Usar ubicacion automatica"/>
+
+                    <VBox fx:id="manualLocationBox" spacing="8">
+                        <Label text="Latitud" styleClass="field-label"/>
+                        <TextField fx:id="latitudeField" promptText="40.4168"/>
+                        <Label text="Longitud" styleClass="field-label"/>
+                        <TextField fx:id="longitudeField" promptText="-3.7038"/>
+                    </VBox>
+
+                    <VBox spacing="8">
+                        <Label text="Radio de busqueda (km)" styleClass="field-label"/>
+                        <TextField fx:id="radiusField" promptText="5"/>
+                    </VBox>
+
+                    <HBox spacing="10">
+                        <Button onAction="#handleFindCenters" styleClass="primary-action-button" text="Buscar cercanos"/>
+                        <Button onAction="#handleShowAllCenters" text="Ver todos"/>
+                    </HBox>
+
+                    <Label fx:id="centersStatusLabel" styleClass="status-label" wrapText="true"/>
+                    <Label fx:id="searchSummaryLabel" wrapText="true"/>
+                </VBox>
+
+                <VBox spacing="14" styleClass="panel-card">
+                    <Label text="Resultados" styleClass="panel-title"/>
+                    <ListView fx:id="centersList" prefHeight="260.0"/>
+                </VBox>
+            </VBox>
+        </VBox>
+    </content>
+
+</ScrollPane>
