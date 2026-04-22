@@ -23,8 +23,8 @@
                 <Label text="Simula lecturas cardiacas, detecta ausencia de pulso y gestiona la prealerta desde la interfaz." styleClass="module-subtitle" wrapText="true"/>
             </VBox>
 
-            <HBox spacing="18">
-                <VBox spacing="14" styleClass="panel-card" HBox.hgrow="ALWAYS">
+            <VBox spacing="18">
+                <VBox spacing="14" styleClass="panel-card">
                     <Label text="Control del monitor" styleClass="panel-title"/>
                     <Button fx:id="startMonitorButton" onAction="#handleStartMonitoring" styleClass="primary-action-button" text="Iniciar monitor"/>
                     <Button fx:id="readPulseButton" onAction="#handleReadPulse" text="Generar lectura"/>
@@ -33,13 +33,13 @@
                     <Label fx:id="healthStatusLabel" styleClass="status-label" wrapText="true"/>
                 </VBox>
 
-                <VBox spacing="14" styleClass="panel-card" HBox.hgrow="ALWAYS">
+                <VBox spacing="14" styleClass="panel-card">
                     <Label text="Estado actual" styleClass="panel-title"/>
                     <Label fx:id="rateLabel"/>
                     <Label fx:id="noPulseLabel"/>
                     <TextArea fx:id="healthDetailsArea" editable="false" prefRowCount="8" wrapText="true"/>
                 </VBox>
-            </HBox>
+            </VBox>
         </VBox>
     </content>
 

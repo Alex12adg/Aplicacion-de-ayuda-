@@ -23,8 +23,8 @@
                 <Label text="Busca hospitales, policia, bomberos y otros centros disponibles alrededor de una ubicacion." styleClass="module-subtitle" wrapText="true"/>
             </VBox>
 
-            <HBox spacing="18">
-                <VBox spacing="14" styleClass="panel-card" HBox.hgrow="ALWAYS">
+            <VBox spacing="18">
+                <VBox spacing="14" styleClass="panel-card">
                     <Label text="Busqueda" styleClass="panel-title"/>
                     <CheckBox fx:id="automaticLocationCheck" onAction="#updateLocationMode" text="Usar ubicacion automatica"/>
 
@@ -49,11 +49,11 @@
                     <Label fx:id="searchSummaryLabel" wrapText="true"/>
                 </VBox>
 
-                <VBox spacing="14" styleClass="panel-card" HBox.hgrow="ALWAYS">
+                <VBox spacing="14" styleClass="panel-card">
                     <Label text="Resultados" styleClass="panel-title"/>
                     <ListView fx:id="centersList" prefHeight="260.0"/>
                 </VBox>
-            </HBox>
+            </VBox>
         </VBox>
     </content>
 

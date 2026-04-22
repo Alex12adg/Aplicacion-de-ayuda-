@@ -53,8 +53,7 @@
 
                             <Separator />
 
-                            <Button styleClass="menu-button" text="Perfil" />
-                            <Button styleClass="menu-button" text="Configuracion" />
+                            <Button onAction="#loadSettings" styleClass="menu-button" text="Configuracion" />
                             <Button onAction="#loadMedical" styleClass="menu-button" text="Historial medico" />
                             <Button onAction="#handleLogout" styleClass="menu-button" text="Cerrar sesion" />
                         </VBox>

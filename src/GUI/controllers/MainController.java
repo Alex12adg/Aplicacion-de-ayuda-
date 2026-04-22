@@ -1,5 +1,6 @@
 package GUI.controllers;
 
+import GUI.AppLayout;
 import Resources.Danger.DangerAlertState;
 import Resources.Danger.DangerAlertSystem;
 import Resources.Emergency.EmergencyManager;
@@ -17,16 +18,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.Optional;
+
 public class MainController {
 
-    private static final double MENU_EXPANDED_WIDTH = 200;
+    private static final double MENU_EXPANDED_WIDTH = 172;
     private static final double MENU_COLLAPSED_WIDTH = 0;
 
     @FXML
@@ -71,7 +76,8 @@ public class MainController {
         UserData user = UserSession.getUser();
         usernameLabel.setText(user != null ? user.getNombre() : "Usuario Demo");
         loadView("Home-view.fxml");
-        applyMenuWidth(MENU_EXPANDED_WIDTH);
+        applyMenuWidth(MENU_COLLAPSED_WIDTH);
+        menuVisible = false;
     }
 
     private void loadView(String fxml) {
@@ -85,6 +91,20 @@ public class MainController {
 
             if (controller instanceof EmergencyController) {
                 ((EmergencyController) controller).setEmergencyManager(emergencyManager);
+            }
+
+            if (controller instanceof HomeController) {
+                UserData currentUser = UserSession.getUser();
+                ((HomeController) controller).setWelcomeName(currentUser != null ? currentUser.getNombre() : "Usuario");
+                ((HomeController) controller).setNavigationActions(
+                        () -> loadProtectedView("Emergency-view.fxml"),
+                        () -> loadProtectedView("health-view.fxml"),
+                        () -> loadProtectedView("voice-view.fxml"),
+                        () -> loadView("Danger-view.fxml"),
+                        () -> loadProtectedView("Centers-view.fxml"),
+                        () -> loadProtectedView("Medical-form-view.fxml"),
+                        () -> loadProtectedView("Settings-view.fxml")
+                );
             }
 
             if (controller instanceof VoiceController) {
@@ -174,8 +194,29 @@ public class MainController {
     }
 
     @FXML
+    private void loadSettings() {
+        loadProtectedView("Settings-view.fxml");
+    }
+
+    @FXML
     private void handleLogout(ActionEvent event) {
         try {
+            Alert confirmationAlert = new Alert(
+                    Alert.AlertType.CONFIRMATION,
+                    "¿Quieres cerrar sesion?",
+                    ButtonType.YES,
+                    ButtonType.NO
+            );
+            confirmationAlert.setTitle("Confirmar cierre de sesion");
+            confirmationAlert.setHeaderText("Cerrar sesion");
+            confirmationAlert.initOwner(usernameLabel.getScene().getWindow());
+
+            Optional<ButtonType> result = confirmationAlert.showAndWait();
+
+            if (result.isEmpty() || result.get() != ButtonType.YES) {
+                return;
+            }
+
             UserSession.clear();
 
             FXMLLoader loader = new FXMLLoader(
@@ -184,7 +225,7 @@ public class MainController {
 
             Parent root = loader.load();
             Stage stage = (Stage) usernameLabel.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 500));
+            stage.setScene(new Scene(root, AppLayout.MOBILE_WIDTH, AppLayout.MOBILE_HEIGHT));
             stage.show();
         } catch (Exception e) {
             System.out.println("Error al cerrar sesion");

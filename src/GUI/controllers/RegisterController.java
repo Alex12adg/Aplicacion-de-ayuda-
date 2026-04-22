@@ -1,5 +1,6 @@
 package GUI.controllers;
 
+import GUI.AppLayout;
 import Resources.Session.UserSession;
 import Resources.User.UserData;
 import Services.UserService;
@@ -70,7 +71,7 @@ public class RegisterController {
         Parent root = loader.load();
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root, 800, 500));
+        stage.setScene(new Scene(root, AppLayout.MOBILE_WIDTH, AppLayout.MOBILE_HEIGHT));
         stage.show();
     }
 }

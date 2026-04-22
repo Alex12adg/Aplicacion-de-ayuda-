@@ -23,8 +23,8 @@
                 <Label text="Configura una palabra clave y simula frases para activar una emergencia por voz desde la aplicacion." styleClass="module-subtitle" wrapText="true"/>
             </VBox>
 
-            <HBox spacing="18">
-                <VBox spacing="14" styleClass="panel-card" HBox.hgrow="ALWAYS">
+            <VBox spacing="18">
+                <VBox spacing="14" styleClass="panel-card">
                     <Label text="Configuracion y simulacion" styleClass="panel-title"/>
                     <VBox spacing="8">
                         <Label text="Palabra clave" styleClass="field-label"/>
@@ -40,13 +40,13 @@
                     <Label fx:id="voiceStatusLabel" styleClass="status-label" wrapText="true"/>
                 </VBox>
 
-                <VBox spacing="14" styleClass="panel-card" HBox.hgrow="ALWAYS">
+                <VBox spacing="14" styleClass="panel-card">
                     <Label text="Estado de deteccion" styleClass="panel-title"/>
                     <Label fx:id="keywordLabel"/>
                     <Label fx:id="lastInputLabel" wrapText="true"/>
                     <TextArea fx:id="voiceDetailsArea" editable="false" prefRowCount="8" wrapText="true"/>
                 </VBox>
-            </HBox>
+            </VBox>
         </VBox>
     </content>
 

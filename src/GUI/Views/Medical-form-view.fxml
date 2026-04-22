@@ -8,6 +8,8 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
 <ScrollPane fitToWidth="true"
@@ -18,38 +20,68 @@
             fx:controller="GUI.controllers.MedicalFormController">
 
     <content>
-        <VBox alignment="TOP_LEFT" spacing="10">
+        <VBox alignment="TOP_LEFT" spacing="20" styleClass="module-page">
             <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
+                <Insets top="22" right="22" bottom="22" left="22"/>
             </padding>
 
-            <Label text="Perfil medico y contactos de emergencia"/>
+            <VBox spacing="6">
+                <Label text="Historial medico" styleClass="module-title"/>
+                <Label text="Consulta tu informacion medica, actualiza los datos principales y gestiona contactos de emergencia solo cuando lo necesites." styleClass="module-subtitle" wrapText="true"/>
+            </VBox>
 
-            <HBox spacing="10">
-                <Button fx:id="editButton" text="Editar datos" onAction="#enableEditMode"/>
-                <Button fx:id="saveButton" text="Guardar cambios" onAction="#handleSave"/>
-            </HBox>
+            <VBox spacing="16" styleClass="panel-card">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Datos medicos" styleClass="panel-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="editButton" text="Editar datos" onAction="#enableEditMode" styleClass="home-outline-button"/>
+                    <Button fx:id="saveButton" text="Guardar cambios" onAction="#handleSave" styleClass="primary-action-button"/>
+                </HBox>
 
-            <Label text="Alergias"/>
-            <TextArea fx:id="allergiesField" prefRowCount="3" wrapText="true"/>
+                <HBox spacing="16">
+                    <VBox spacing="8" HBox.hgrow="ALWAYS">
+                        <Label text="Alergias" styleClass="field-label"/>
+                        <TextArea fx:id="allergiesField" prefRowCount="4" wrapText="true"/>
+                    </VBox>
 
-            <Label text="Condiciones medicas"/>
-            <TextArea fx:id="conditionsField" prefRowCount="3" wrapText="true"/>
+                    <VBox spacing="8" HBox.hgrow="ALWAYS">
+                        <Label text="Condiciones medicas" styleClass="field-label"/>
+                        <TextArea fx:id="conditionsField" prefRowCount="4" wrapText="true"/>
+                    </VBox>
+                </HBox>
 
-            <Label text="Medicacion actual"/>
-            <TextArea fx:id="medicationsField" prefRowCount="3" wrapText="true"/>
+                <VBox spacing="8">
+                    <Label text="Medicacion actual" styleClass="field-label"/>
+                    <TextArea fx:id="medicationsField" prefRowCount="4" wrapText="true"/>
+                </VBox>
 
-            <Label text="Contactos guardados"/>
-            <ListView fx:id="contactsList" prefHeight="140"/>
+                <Label fx:id="statusLabel" styleClass="status-label" wrapText="true"/>
+            </VBox>
 
-            <Label text="Nuevo contacto"/>
-            <TextField fx:id="contactNameField" promptText="Nombre completo"/>
-            <TextField fx:id="contactPhoneField" promptText="Telefono"/>
-            <TextField fx:id="contactRelationField" promptText="Madre, padre, pareja, amigo..."/>
+            <VBox spacing="16" styleClass="panel-card">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Contactos de emergencia" styleClass="panel-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="toggleContactFormButton" text="Mostrar formulario de contacto" onAction="#toggleContactForm" styleClass="home-outline-button"/>
+                </HBox>
 
-            <Button fx:id="addContactButton" text="Anadir contacto" onAction="#handleAddContact"/>
+                <ListView fx:id="contactsList" prefHeight="170"/>
 
-            <Label fx:id="statusLabel"/>
+                <VBox fx:id="contactFormBox" spacing="12" managed="false" visible="false" styleClass="subtle-panel">
+                    <Label text="Nuevo contacto" styleClass="field-label"/>
+
+                    <HBox spacing="12">
+                        <TextField fx:id="contactNameField" promptText="Nombre completo" HBox.hgrow="ALWAYS"/>
+                        <TextField fx:id="contactPhoneField" promptText="Telefono" HBox.hgrow="ALWAYS"/>
+                    </HBox>
+
+                    <TextField fx:id="contactRelationField" promptText="Madre, padre, pareja, amigo..."/>
+
+                    <HBox alignment="CENTER_RIGHT">
+                        <Button fx:id="addContactButton" text="Anadir contacto" onAction="#handleAddContact" styleClass="primary-action-button"/>
+                    </HBox>
+                </VBox>
+            </VBox>
         </VBox>
     </content>
 

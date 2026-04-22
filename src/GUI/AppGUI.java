@@ -14,7 +14,7 @@ public class AppGUI extends Application {
                 getClass().getResource("/GUI/Views/Login-view.fxml")
         );
 
-        Scene scene = new Scene(loader.load(), 800, 500);
+        Scene scene = new Scene(loader.load(), AppLayout.MOBILE_WIDTH, AppLayout.MOBILE_HEIGHT);
 
         stage.setTitle("Sistema de Emergencias");
         stage.setScene(scene);
