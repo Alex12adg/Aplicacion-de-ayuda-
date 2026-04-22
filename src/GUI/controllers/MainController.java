@@ -1,5 +1,6 @@
 package GUI.controllers;
 
+import Resources.Danger.DangerAlertState;
 import Resources.Danger.DangerAlertSystem;
 import Resources.Emergency.EmergencyManager;
 import Resources.Heart.HeartRateMonitor;
@@ -7,6 +8,7 @@ import Resources.Session.UserSession;
 import Resources.User.UserData;
 import Resources.Voice.VoiceConfig;
 import Resources.Voice.VoiceDetector;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -15,9 +17,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -33,7 +36,19 @@ public class MainController {
     private StackPane contentArea;
 
     @FXML
-    private VBox sideMenu;
+    private ScrollPane sideMenu;
+
+    @FXML
+    private StackPane dangerOverlay;
+
+    @FXML
+    private Label dangerModalMessageLabel;
+
+    @FXML
+    private Label dangerModalLocationLabel;
+
+    @FXML
+    private Button dangerModalStopButton;
 
     private EmergencyManager emergencyManager;
     private VoiceDetector voiceDetector;
@@ -41,6 +56,7 @@ public class MainController {
     private DangerAlertSystem dangerSystem;
     private HeartRateMonitor heartMonitor;
     private boolean menuVisible = true;
+    private Timeline dangerAlarmTimeline;
 
     public MainController() {
         emergencyManager = new EmergencyManager();
@@ -77,10 +93,15 @@ public class MainController {
 
             if (controller instanceof DangerController) {
                 ((DangerController) controller).setDangerSystem(dangerSystem, emergencyManager);
+                ((DangerController) controller).setModalHandler(this::showDangerOverlay);
             }
 
             if (controller instanceof HealthController) {
                 ((HealthController) controller).setHeartMonitor(heartMonitor);
+            }
+
+            if (controller instanceof CentersController) {
+                ((CentersController) controller).setEmergencyManager(emergencyManager);
             }
 
             contentArea.getChildren().clear();
@@ -93,6 +114,10 @@ public class MainController {
 
     @FXML
     private void toggleSideMenu() {
+        if (dangerSystem.isAlertActive()) {
+            return;
+        }
+
         double targetWidth = menuVisible ? MENU_COLLAPSED_WIDTH : MENU_EXPANDED_WIDTH;
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(220),
@@ -115,22 +140,22 @@ public class MainController {
 
     @FXML
     private void loadHome() {
-        loadView("Home-view.fxml");
+        loadProtectedView("Home-view.fxml");
     }
 
     @FXML
     private void loadEmergency() {
-        loadView("Emergency-view.fxml");
+        loadProtectedView("Emergency-view.fxml");
     }
 
     @FXML
     private void loadHealth() {
-        loadView("health-view.fxml");
+        loadProtectedView("health-view.fxml");
     }
 
     @FXML
     private void loadVoice() {
-        loadView("voice-view.fxml");
+        loadProtectedView("voice-view.fxml");
     }
 
     @FXML
@@ -140,12 +165,12 @@ public class MainController {
 
     @FXML
     private void loadCenters() {
-        loadView("Centers-view.fxml");
+        loadProtectedView("Centers-view.fxml");
     }
 
     @FXML
     private void loadMedical() {
-        loadView("Medical-form-view.fxml");
+        loadProtectedView("Medical-form-view.fxml");
     }
 
     @FXML
@@ -193,5 +218,71 @@ public class MainController {
         Thread thread = new Thread(() -> heartMonitor.startMonitoring());
         thread.setDaemon(true);
         thread.start();
+    }
+
+    @FXML
+    private void handleDismissDangerAlarm() {
+        if (!dangerSystem.isAlertActive()) {
+            hideDangerOverlay();
+            return;
+        }
+
+        DangerAlertState state = dangerSystem.confirmSafe();
+        applyDangerOverlayState(state);
+        hideDangerOverlay();
+    }
+
+    private void loadProtectedView(String fxml) {
+        if (dangerSystem.isAlertActive()) {
+            return;
+        }
+
+        loadView(fxml);
+    }
+
+    private void showDangerOverlay(DangerAlertState state) {
+        applyDangerOverlayState(state);
+        dangerOverlay.setManaged(true);
+        dangerOverlay.setVisible(true);
+        startDangerCountdown();
+    }
+
+    private void hideDangerOverlay() {
+        if (dangerAlarmTimeline != null) {
+            dangerAlarmTimeline.stop();
+        }
+
+        dangerOverlay.setVisible(false);
+        dangerOverlay.setManaged(false);
+    }
+
+    private void startDangerCountdown() {
+        if (dangerAlarmTimeline != null) {
+            dangerAlarmTimeline.stop();
+        }
+
+        dangerAlarmTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(3), event -> handleDangerTimeout())
+        );
+        dangerAlarmTimeline.setCycleCount(Animation.INDEFINITE);
+        dangerAlarmTimeline.play();
+    }
+
+    private void handleDangerTimeout() {
+        DangerAlertState state = dangerSystem.registerNoConfirmation(emergencyManager);
+        applyDangerOverlayState(state);
+
+        if (!state.isActive()) {
+            hideDangerOverlay();
+        }
+    }
+
+    private void applyDangerOverlayState(DangerAlertState state) {
+        dangerModalMessageLabel.setText(state.getStatusMessage());
+        dangerModalLocationLabel.setText(
+                state.getLocation() == null || state.getLocation().isBlank()
+                        ? "Ubicacion no disponible"
+                        : "Ubicacion detectada: " + state.getLocation()
+        );
     }
 }

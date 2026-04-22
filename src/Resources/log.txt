@@ -3,3 +3,4 @@ Emergencia [accidente] en 40,357337,-3,799026 | Usuario: Usuario Simulado | Grav
 Emergencia [accidene] en 40,473931,-3,717850 | Usuario: Usuario Simulado | Gravedad: 10
 Emergencia [Peligro inminente] en Ubicación simulada del usuario | Usuario: Usuario | Gravedad: 3
 Emergencia [Peligro inminente] en Ubicación simulada del usuario | Usuario: Usuario | Gravedad: 3
+Emergencia [Peligro inminente] en 40,586503,-3,506899 | Usuario: Roberto | Gravedad: 3

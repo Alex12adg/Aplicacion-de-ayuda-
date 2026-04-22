@@ -1,93 +1,113 @@
 package Resources.Danger;
 
-import Resources.Emergency.*;
-import java.util.Scanner;
-
+import Resources.Emergency.AlertSender;
+import Resources.Emergency.EmergencyEvent;
+import Resources.Emergency.EmergencyManager;
+import Resources.Location.GPSModule;
 import Resources.Session.UserSession;
-import Resources.User.*;
+import Resources.User.UserData;
 
 public class DangerAlertSystem {
 
+    private static final int MAX_ATTEMPTS = 3;
+
     private boolean alertActive = false;
+    private int attemptsRemaining = 0;
+    private String currentLocation = "";
+    private final GPSModule gpsModule = new GPSModule();
 
     public void activateAlert(EmergencyManager manager) {
+        startAlert();
+    }
 
+    public DangerAlertState startAlert() {
         alertActive = true;
+        attemptsRemaining = MAX_ATTEMPTS;
+        currentLocation = gpsModule.getAutoLocation();
 
-        System.out.println("=== ALERTA DE PELIGRO INMINENTE ===");
-
-        // 1 Obtener ubicación (simulada)
-        String location = getLocation();
-
-        System.out.println("Ubicación detectada: " + location);
-
-        // 2 Aviso inicial
-        System.out.println("Avisando a contactos de posible peligro...");
-
-        System.out.println("Pulsa 'ok' para confirmar que estás bien.");
-
-        waitForUserResponse(manager, location);
+        return new DangerAlertState(
+                true,
+                false,
+                currentLocation,
+                attemptsRemaining,
+                "Alerta iniciada. Se ha detectado una situacion de peligro y se espera confirmacion del usuario."
+        );
     }
 
-    private String getLocation() {
-
-        // simulación de GPS
-        return "Ubicación simulada del usuario";
-    }
-
-    private void waitForUserResponse(EmergencyManager manager, String location) {
-
-        Scanner sc = new Scanner(System.in);
-
-        int attempts = 3;
-
-        while (attempts > 0 && alertActive) {
-
-            System.out.print("Respuesta del usuario: ");
-
-            String response = sc.nextLine();
-
-            if (response.equalsIgnoreCase("ok")) {
-
-                System.out.println("Usuario confirmado. Cancelando alerta.");
-                alertActive = false;
-                return;
-            }
-
-            attempts--;
-
-            System.out.println("Sin confirmación válida. Intentos restantes: " + attempts);
+    public DangerAlertState confirmSafe() {
+        if (!alertActive) {
+            return new DangerAlertState(false, false, currentLocation, attemptsRemaining, "No hay ninguna alerta activa.");
         }
 
-        if (alertActive) {
-
-            System.out.println("Sin respuesta del usuario. Enviando alerta de emergencia.");
-
-            sendEmergencyAlert(manager, location);
-        }
+        alertActive = false;
+        return new DangerAlertState(
+                false,
+                false,
+                currentLocation,
+                attemptsRemaining,
+                "El usuario ha confirmado que esta bien. La alerta se ha cancelado."
+        );
     }
 
-    private void sendEmergencyAlert(EmergencyManager manager, String location) {
+    public DangerAlertState registerNoConfirmation(EmergencyManager manager) {
+        if (!alertActive) {
+            return new DangerAlertState(false, false, currentLocation, attemptsRemaining, "No hay ninguna alerta activa.");
+        }
 
+        attemptsRemaining--;
+
+        if (attemptsRemaining > 0) {
+            return new DangerAlertState(
+                true,
+                false,
+                currentLocation,
+                attemptsRemaining,
+                "Sin confirmacion del usuario. Se mantiene la alerta preventiva."
+            );
+        }
+
+        alertActive = false;
+        boolean sent = sendEmergencyAlert(manager, currentLocation);
+
+        return new DangerAlertState(
+                false,
+                sent,
+                currentLocation,
+                0,
+                sent
+                        ? "No hubo respuesta. Se ha escalado a emergencia real."
+                        : "No hubo respuesta, pero la emergencia no pudo enviarse."
+        );
+    }
+
+    public DangerAlertState getCurrentState() {
+        return new DangerAlertState(
+                alertActive,
+                false,
+                currentLocation,
+                attemptsRemaining,
+                alertActive ? "Alerta activa en espera de confirmacion." : "Sin alerta activa."
+        );
+    }
+
+    public boolean isAlertActive() {
+        return alertActive;
+    }
+
+    private boolean sendEmergencyAlert(EmergencyManager manager, String location) {
         try {
             UserData user = UserSession.getUser();
 
             if (user == null) {
-                throw new Exception("No hay usuario en sesión");
+                throw new Exception("No hay usuario en sesion");
             }
 
-        EmergencyEvent event = new EmergencyEvent(
-                "Peligro inminente",
-                location,
-                user,
-                3
-        );
-
-        AlertSender sender = new AlertSender();
-
-        sender.sendAlert(event);
+            EmergencyEvent event = new EmergencyEvent("Peligro inminente", location, user, 3);
+            new AlertSender().sendAlert(event);
+            return true;
         } catch (Exception e) {
             System.out.println("Error al activar sistema de alerta: " + e.getMessage());
+            return false;
         }
     }
 }

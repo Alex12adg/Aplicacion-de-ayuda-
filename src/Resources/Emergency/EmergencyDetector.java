@@ -64,7 +64,7 @@ public class EmergencyDetector {
         return new EmergencyEvent(tipo, ubicacion, usuario, gravedad);
     }
 
-    private boolean validateSeverity(int gravedad) {
+    public boolean validateSeverity(int gravedad) {
         return gravedad >= umbral;
     }
 }
