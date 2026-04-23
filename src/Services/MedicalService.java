@@ -60,6 +60,23 @@ public class MedicalService {
         return medicalDAO.getMedicalInfoByUser(userId);
     }
 
+    public void deleteContact(int userId, int contactId) throws Exception {
+
+        if (userId <= 0) {
+            throw new Exception("Usuario invalido");
+        }
+
+        if (contactId <= 0) {
+            throw new Exception("Contacto invalido");
+        }
+
+        boolean deleted = contactDAO.deleteContact(userId, contactId);
+
+        if (!deleted) {
+            throw new Exception("No se pudo borrar el contacto");
+        }
+    }
+
     public List<Contact> getContacts(int userId) throws Exception {
 
         if (userId <= 0) {

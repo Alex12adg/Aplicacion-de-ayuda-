@@ -43,6 +43,9 @@ public class UserData {
     public String getConditions() { return conditions; }
     public String getMedications() { return medications; }
 
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setEmail(String email) { this.email = email; }
+    public void setPassword(String password) { this.password = password; }
     public void setAllergies(String allergies) { this.allergies = allergies; }
     public void setConditions(String conditions) { this.conditions = conditions; }
     public void setMedications(String medications) { this.medications = medications; }

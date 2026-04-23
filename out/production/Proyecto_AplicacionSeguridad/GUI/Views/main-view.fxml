@@ -49,7 +49,8 @@
                             <Button onAction="#loadHealth" styleClass="menu-button" text="Monitor salud" />
                             <Button onAction="#loadVoice" styleClass="menu-button" text="Deteccion voz" />
                             <Button onAction="#loadDanger" styleClass="menu-button" text="Alerta peligro" />
-                            <Button onAction="#loadCenters" styleClass="menu-button" text="Centros cercanos" />
+                            <Button onAction="#loadReservations" styleClass="menu-button" text="Reservas" />
+                            <Button onAction="#loadCenters" styleClass="menu-button" text="Centros" />
 
                             <Separator />
 

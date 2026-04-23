@@ -19,8 +19,8 @@
             </padding>
 
             <VBox spacing="6">
-                <Label text="Centros cercanos" styleClass="module-title"/>
-                <Label text="Busca hospitales, policia, bomberos y otros centros disponibles alrededor de una ubicacion." styleClass="module-subtitle" wrapText="true"/>
+                <Label text="Centros" styleClass="module-title"/>
+                <Label text="Busca centros cercanos y gestiona tus centros privados dentro del mismo modulo." styleClass="module-subtitle" wrapText="true"/>
             </VBox>
 
             <VBox spacing="18">
@@ -52,6 +52,47 @@
                 <VBox spacing="14" styleClass="panel-card">
                     <Label text="Resultados" styleClass="panel-title"/>
                     <ListView fx:id="centersList" prefHeight="260.0"/>
+                </VBox>
+
+                <VBox spacing="16" styleClass="panel-card">
+                    <Label text="Centros publicos" styleClass="panel-title"/>
+                    <Label text="Estos centros ya vienen definidos en el sistema y son de solo lectura." wrapText="true"/>
+                    <TableView fx:id="publicResourcesTable" prefHeight="180.0">
+                        <columns>
+                            <TableColumn fx:id="publicNameColumn" text="Centro"/>
+                            <TableColumn fx:id="publicCategoryColumn" text="Categoria"/>
+                            <TableColumn fx:id="publicLocationColumn" text="Ubicacion"/>
+                            <TableColumn fx:id="publicDurationColumn" text="Min"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+                <VBox spacing="16" styleClass="panel-card">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="Centros privados" styleClass="panel-title"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button text="Anadir centro" onAction="#handleAddPrivateCenter" styleClass="primary-action-button"/>
+                        <Button fx:id="updatePrivateCenterButton" text="Modificar informacion" onAction="#handleUpdatePrivateCenter" styleClass="home-outline-button" disable="true"/>
+                        <Button text="Borrar centro" onAction="#handleDeletePrivateCenter" styleClass="home-outline-button"/>
+                    </HBox>
+
+                    <TableView fx:id="privateResourcesTable" prefHeight="180.0">
+                        <columns>
+                            <TableColumn fx:id="privateNameColumn" text="Centro"/>
+                            <TableColumn fx:id="privateCategoryColumn" text="Categoria"/>
+                            <TableColumn fx:id="privateLocationColumn" text="Ubicacion"/>
+                            <TableColumn fx:id="privateDurationColumn" text="Min"/>
+                        </columns>
+                    </TableView>
+
+                    <VBox spacing="8">
+                        <Label fx:id="privateResourceFormLabel" text="Nuevo centro privado" styleClass="field-label"/>
+                        <TextField fx:id="privateResourceNameField" promptText="Nombre del centro"/>
+                        <TextField fx:id="privateResourceCategoryField" promptText="Categoria o tipo de atencion"/>
+                        <TextField fx:id="privateResourceLocationField" promptText="Ubicacion"/>
+                        <TextField fx:id="privateResourceDurationField" promptText="Tiempo de llegada aproximada (en minutos)"/>
+                        <TextArea fx:id="privateResourceDescriptionArea" prefRowCount="3" wrapText="true" promptText="Descripcion del centro o servicio"/>
+                    </VBox>
                 </VBox>
             </VBox>
         </VBox>

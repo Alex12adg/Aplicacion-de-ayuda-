@@ -60,8 +60,9 @@
 
             <VBox spacing="16" styleClass="panel-card">
                 <HBox alignment="CENTER_LEFT" spacing="10">
-                    <Label text="Contactos de emergencia" styleClass="panel-title"/>
+                    <Label text="Contactos" styleClass="panel-title"/>
                     <Region HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="deleteContactButton" text="Borrar seleccionado" onAction="#handleDeleteContact" styleClass="home-outline-button"/>
                     <Button fx:id="toggleContactFormButton" text="Mostrar formulario de contacto" onAction="#toggleContactForm" styleClass="home-outline-button"/>
                 </HBox>
 

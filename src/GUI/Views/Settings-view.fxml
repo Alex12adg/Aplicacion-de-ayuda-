@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
 <ScrollPane fitToWidth="true"
@@ -23,7 +24,7 @@
             <VBox spacing="18" styleClass="settings-hero">
                 <VBox spacing="8">
                     <Label text="Configuracion" styleClass="home-hero-title"/>
-                    <Label text="Base visual preparada para futuras preferencias del sistema, accesibilidad, sensores, aspecto y comportamiento general." styleClass="home-hero-subtitle" wrapText="true"/>
+                    <Label text="Gestiona la cuenta activa desde este panel y manten el acceso protegido mediante confirmacion por contrasena." styleClass="home-hero-subtitle" wrapText="true"/>
                 </VBox>
 
                 <VBox spacing="10" styleClass="home-status-card">
@@ -34,20 +35,41 @@
 
             <VBox spacing="16">
                 <VBox spacing="12" styleClass="panel-card">
-                    <Label text="Apariencia" styleClass="panel-title"/>
-                    <Label text="Aqui podran añadirse temas, densidad visual, tamaños y personalizacion de la interfaz." wrapText="true"/>
+                    <Label text="Cuenta activa" styleClass="panel-title"/>
+                    <Label text="Puedes cambiar el nombre, el correo o la contrasena de la cuenta actual. Cualquier cambio requiere la contrasena vigente." wrapText="true"/>
+
                     <VBox spacing="8" styleClass="subtle-panel">
-                        <Label text="Pendiente de implementacion" styleClass="field-label"/>
-                        <Label text="El panel ya queda maquetado para incorporar estos controles sin rehacer la escena." wrapText="true"/>
+                        <Label text="Nombre actual" styleClass="field-label"/>
+                        <Label fx:id="accountNameLabel" wrapText="true"/>
+                        <Label text="Correo actual" styleClass="field-label"/>
+                        <Label fx:id="accountEmailLabel" wrapText="true"/>
+                    </VBox>
+
+                    <VBox spacing="8" styleClass="subtle-panel">
+                        <Label text="Nuevo nombre" styleClass="field-label"/>
+                        <TextField fx:id="newNameField" promptText="Deja en blanco para mantener el actual"/>
+
+                        <Label text="Nuevo correo electronico" styleClass="field-label"/>
+                        <TextField fx:id="newEmailField" promptText="Deja en blanco para mantener el actual"/>
+
+                        <Label text="Nueva contrasena" styleClass="field-label"/>
+                        <PasswordField fx:id="newPasswordField" promptText="Deja en blanco para mantener la actual"/>
+
+                        <Label text="Contrasena actual" styleClass="field-label"/>
+                        <PasswordField fx:id="confirmPasswordField" promptText="Necesaria para guardar cambios"/>
+
+                        <Button text="Guardar cambios de cuenta" onAction="#handleUpdateAccount" styleClass="primary-action-button"/>
                     </VBox>
                 </VBox>
 
                 <VBox spacing="12" styleClass="panel-card">
-                    <Label text="Sistema y alertas" styleClass="panel-title"/>
-                    <Label text="Zona reservada para parametros de notificaciones, tiempos de espera, sensores y reglas internas." wrapText="true"/>
+                    <Label text="Eliminar cuenta" styleClass="panel-title"/>
+                    <Label text="Esta accion borra la cuenta activa y los datos asociados. Antes de ejecutarse se mostrara una confirmacion adicional." wrapText="true"/>
+
                     <VBox spacing="8" styleClass="subtle-panel">
-                        <Label text="Pendiente de implementacion" styleClass="field-label"/>
-                        <Label text="La estructura actual permite crecer sin que la pantalla vuelva a parecer un placeholder." wrapText="true"/>
+                        <Label text="Contrasena actual" styleClass="field-label"/>
+                        <PasswordField fx:id="deletePasswordField" promptText="Introduce la contrasena para confirmar"/>
+                        <Button text="Eliminar cuenta activa" onAction="#handleDeleteAccount" styleClass="primary-action-button"/>
                     </VBox>
                 </VBox>
             </VBox>

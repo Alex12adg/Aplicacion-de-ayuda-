@@ -1,200 +1,179 @@
-# Aplicacion de Ayuda y Emergencias
+# Aplicacion de Ayuda, Emergencias y Reservas
 
-Aplicacion de escritorio desarrollada en Java y JavaFX orientada a la asistencia personal en situaciones de emergencia. El sistema centraliza varios modulos de apoyo dentro de una misma interfaz grafica: emergencias manuales, alerta de peligro, deteccion por voz, monitor de salud, centros cercanos, historial medico y configuracion base.
+Aplicacion de escritorio en Java y JavaFX orientada a asistencia personal, gestion de emergencias y reserva de servicios de atencion. La interfaz centraliza login, dashboard, emergencias, alerta de peligro, monitor de salud, deteccion por voz, centros, historial medico, reservas y configuracion.
 
-El objetivo del proyecto es que el usuario pueda activar o supervisar funciones de seguridad desde la propia aplicacion, sin depender de la terminal como flujo principal de uso.
+## Estado actual
 
-## Objetivo del proyecto
+La aplicacion ya permite:
 
-La aplicacion busca cubrir varios escenarios habituales dentro de un sistema de ayuda personal:
-
-- Activar una emergencia manual indicando tipo, gravedad y ubicacion.
-- Lanzar una alerta preventiva de peligro que puede escalar automaticamente.
-- Simular una deteccion de emergencia por voz mediante palabra clave.
-- Simular monitorizacion cardiaca con prealerta por ausencia de pulso.
+- Iniciar sesion y registrar usuarios.
+- Gestionar datos de cuenta desde configuracion.
+- Lanzar emergencias manuales desde interfaz.
+- Activar una alerta de peligro con escalado automatico.
+- Simular deteccion por voz por palabra clave.
+- Simular monitorizacion cardiaca y prealerta.
 - Consultar centros de emergencia cercanos.
-- Gestionar informacion medica y contactos de emergencia.
-- Preparar una escena de configuracion para futuras opciones del sistema.
+- Guardar historial medico y contactos de emergencia.
+- Crear, consultar, editar y borrar reservas de atencion.
 
-## Tecnologias principales
+## Tecnologias
 
 - Java
-- JavaFX con vistas FXML
-- CSS para estilos de interfaz
-- MariaDB en la capa de datos existente del proyecto
+- JavaFX con FXML
+- CSS
+- JDBC
+- MariaDB
 
 ## Punto de entrada
-
-La aplicacion arranca desde:
 
 - `src/App/Main/Main.java`
 - `src/GUI/AppGUI.java`
 
-El arranque carga la vista de login y, tras la autenticacion, accede a la vista principal de la aplicacion.
+La aplicacion abre el login y, tras autenticacion, carga la vista principal con menu lateral y dashboard.
 
-## Modulos disponibles
+## Modulos principales
 
-### 1. Dashboard de inicio
+### Dashboard
 
-La pantalla principal de inicio ya no es un placeholder. Ahora actua como panel de acceso rapido a los modulos principales.
+- Acceso rapido a todos los modulos principales.
+- Resumen visual inicial para el usuario autenticado.
 
-Funciones principales:
-
-- Bienvenida al usuario.
-- Resumen visual del estado del panel.
-- Tarjetas de acceso rapido a emergencia, peligro, salud, voz, centros, historial medico y configuracion.
-
-Archivos relacionados:
+Archivos:
 
 - `src/GUI/Views/Home-view.fxml`
 - `src/GUI/controllers/HomeController.java`
 - `src/GUI/controllers/MainController.java`
 
-### 2. Emergencia
+### Emergencia
 
-Permite crear una alerta manual desde la interfaz grafica.
+- Alta de emergencias manuales con tipo, gravedad y ubicacion.
+- Presentacion del resultado y centros disponibles.
 
-Funciones principales:
-
-- Seleccion de tipo de emergencia.
-- Nivel de gravedad configurable.
-- Uso de ubicacion automatica o manual.
-- Visualizacion del estado de la alerta.
-- Listado de centros de emergencia cargados en la aplicacion.
-
-Archivos relacionados:
+Archivos:
 
 - `src/GUI/Views/Emergency-view.fxml`
 - `src/GUI/controllers/EmergencyController.java`
-- `src/Resources/Emergency/EmergencyManager.java`
-- `src/Resources/Emergency/EmergencyRequest.java`
-- `src/Resources/Emergency/EmergencyProcessResult.java`
+- `src/Resources/Emergency/*`
 
-### 3. Alerta de peligro
+### Alerta de peligro
 
-Activa una alarma preventiva que bloquea la navegacion de la aplicacion y muestra una ventana modal centrada sobre la escena principal.
+- Modal bloqueante mientras la alerta esta activa.
+- Escalado automatico a emergencia al agotar intentos.
 
-Comportamiento actual:
-
-- Al iniciar la alerta, la aplicacion muestra un popup modal.
-- Mientras la alerta esta activa no se puede cambiar a otras pestañas.
-- El usuario solo dispone de un boton para terminar la alarma.
-- Los intentos internos no se muestran en pantalla.
-- Cada 3 segundos el sistema reduce automaticamente un intento.
-- Cuando se agotan los intentos, la alerta escala a una emergencia real.
-
-Archivos relacionados:
+Archivos:
 
 - `src/GUI/Views/Danger-view.fxml`
 - `src/GUI/controllers/DangerController.java`
-- `src/GUI/controllers/MainController.java`
-- `src/Resources/Danger/DangerAlertSystem.java`
-- `src/Resources/Danger/DangerAlertState.java`
+- `src/Resources/Danger/*`
 
-### 4. Monitor de salud
+### Salud
 
-Simula un monitor cardiaco dentro de la interfaz.
+- Simulacion de lecturas cardiacas.
+- Prealerta por ausencia de pulso sostenida.
 
-Funciones principales:
-
-- Inicio y parada manual del monitor.
-- Generacion de lecturas simuladas.
-- Deteccion de lecturas consecutivas sin pulso.
-- Activacion de prealerta cuando se alcanza el umbral configurado.
-- Confirmacion manual del usuario desde la interfaz.
-
-Archivos relacionados:
+Archivos:
 
 - `src/GUI/Views/health-view.fxml`
 - `src/GUI/controllers/HealthController.java`
-- `src/Resources/Heart/HeartRateMonitor.java`
-- `src/Resources/Heart/HeartMonitorState.java`
-- `src/Resources/Heart/HeartRateSensorSimulator.java`
+- `src/Resources/Heart/*`
 
-### 5. Deteccion por voz
-
-Simula el reconocimiento de una palabra clave desde la interfaz grafica.
-
-Funciones principales:
+### Voz
 
 - Configuracion de palabra clave.
-- Inicio y parada del modo escucha.
-- Introduccion manual de frases simuladas.
-- Disparo de emergencia cuando la frase contiene la palabra clave.
+- Simulacion de escucha y disparo de emergencia.
 
-Archivos relacionados:
+Archivos:
 
 - `src/GUI/Views/voice-view.fxml`
 - `src/GUI/controllers/VoiceController.java`
-- `src/Resources/Voice/VoiceDetector.java`
-- `src/Resources/Voice/VoiceDetectionState.java`
-- `src/Resources/Voice/VoiceConfig.java`
+- `src/Resources/Voice/*`
 
-### 6. Centros cercanos
+### Centros
 
-Muestra los centros de emergencia disponibles cargados desde recursos locales y permite filtrarlos por proximidad.
+- Carga de centros desde JSON local.
+- Filtro por radio y ubicacion.
+- Visualizacion de centros publicos de solo lectura.
+- Alta, modificacion y borrado de centros privados del usuario.
 
-Funciones principales:
-
-- Consulta de todos los centros cargados.
-- Busqueda por radio en kilometros.
-- Uso de coordenadas automaticas o manuales.
-- Calculo de distancia aproximada a cada centro.
-
-Archivos relacionados:
+Archivos:
 
 - `src/GUI/Views/Centers-view.fxml`
 - `src/GUI/controllers/CentersController.java`
-- `src/Resources/Location/FacilityLocator.java`
-- `src/Resources/Location/Centers.json`
+- `src/Resources/Location/*`
+- `src/Resources/Database/ReservationResourceDAO.java`
 
-### 7. Historial medico y contactos
+### Historial medico y contactos
 
-Gestiona informacion medica basica del usuario y contactos de emergencia asociados.
+- Guardado de alergias, condiciones y medicacion.
+- Alta y borrado de contactos de emergencia.
 
-Funciones principales:
-
-- Edicion de alergias, condiciones y medicacion.
-- Alta de contactos de emergencia.
-- Formulario de contacto oculto hasta que el usuario decide mostrarlo.
-- Persistencia mediante la capa de servicios y acceso a datos.
-
-Archivos relacionados:
+Archivos:
 
 - `src/GUI/Views/Medical-form-view.fxml`
 - `src/GUI/controllers/MedicalFormController.java`
 - `src/Services/MedicalService.java`
+- `src/Resources/Database/MedicalDAO.java`
+- `src/Resources/Database/ContactDAO.java`
 
-### 8. Configuracion
+### Reservas
 
-Escena base preparada para futuras opciones de personalizacion y comportamiento del sistema.
+- Catalogo de recursos reservables sembrado en base de datos.
+- Alta de reservas con validacion de fecha y tramo horario.
+- Deteccion de solapes por recurso.
+- Consulta de reservas del usuario.
+- Borrado completo de reservas desde la interfaz.
+- Edicion de reservas activas desde la interfaz.
 
-Funciones actuales:
+Archivos:
 
-- Pantalla funcional accesible desde el menu lateral.
-- Espacio reservado para futuras preferencias visuales, notificaciones y parametros internos.
+- `src/GUI/Views/Reservations-view.fxml`
+- `src/GUI/controllers/ReservationsController.java`
+- `src/Services/ReservationService.java`
+- `src/Resources/Database/ReservationDAO.java`
+- `src/Resources/Database/ReservationResourceDAO.java`
 
-Archivos relacionados:
+### Configuracion
+
+- Pantalla base funcional.
+- Actualizacion de cuenta y eliminacion de cuenta segun la logica actual de servicios/DAO.
+
+Archivos:
 
 - `src/GUI/Views/Settings-view.fxml`
 - `src/GUI/controllers/SettingsController.java`
+- `src/Services/UserService.java`
+- `src/Resources/Database/UserDAO.java`
 
-## Interfaz actual
+## Base de datos
 
-- Menu lateral integrado en la vista principal.
-- Barra visual del scroll lateral oculta para mantener una navegacion mas limpia.
-- Pantalla de login redisenada como tarjeta flotante sobre el fondo.
-- El fondo del login ya ocupa toda la pantalla sin dejar un bloque blanco inferior.
-- Espacio reservado para insertar una imagen superior en el formulario de acceso.
-- Popup modal centrado para la alerta de peligro.
-- Confirmacion modal antes de cerrar sesion.
-- En historial medico, el alta de contactos queda oculta hasta que el usuario decide mostrar el formulario.
-- El menu lateral ya no muestra el acceso muerto de perfil y la opcion de configuracion abre una escena base funcional.
-- La portada ya funciona como dashboard con accesos rapidos a los modulos principales.
-- Se ha aplicado una pasada de maquetacion para unificar el estilo visual entre login, registro, dashboard, historial medico y configuracion.
-- Las escenas y transiciones principales ya se han ajustado a un formato movil vertical en lugar de una ventana horizontal.
+La conexion actual esta definida en `src/Resources/Database/DBConnection.java`:
 
-## Estructura general del proyecto
+- Base de datos: `emergency_app`
+- Motor esperado: MariaDB
+- URL: `jdbc:mariadb://localhost:3306/emergency_app`
+- Usuario por defecto en desarrollo: `root`
+
+### Tablas utilizadas por la aplicacion
+
+- `users`
+- `medical_info`
+- `contacts`
+- `emergencies`
+- `booking_resources`
+- `bookings`
+
+### Scripts disponibles
+
+- `Docs/database/mariadb-full-schema.sql`: esquema completo de la aplicacion con tablas, claves foraneas e insercion base de recursos reservables.
+- `Docs/database/reservas-module.sql`: script acotado al modulo de reservas.
+
+### Importacion recomendada
+
+1. Crear la base o ejecutar directamente el script completo.
+2. Importar `Docs/database/mariadb-full-schema.sql`.
+3. Verificar que el usuario y la clave definidos en `DBConnection.java` coinciden con el entorno local.
+
+## Estructura del proyecto
 
 ```text
 src/
@@ -205,73 +184,40 @@ src/
     controllers/
     Styles/
   Resources/
+    Contacts/
     Danger/
+    Data/
+    Database/
     Emergency/
     Heart/
     Location/
-    Voice/
-    Database/
     Model/
+    Notification/
     Session/
+    User/
+    Voice/
   Services/
 Docs/
+  API/
+  database/
   README.md
 ```
 
-## Flujo general de uso
+## Ejecucion
 
-1. El usuario inicia sesion.
-2. Accede a la vista principal.
-3. Puede entrar directamente a un modulo desde el dashboard o usar el menu lateral.
-4. Cada modulo expone su funcionalidad directamente en la interfaz.
-5. Los eventos relevantes pueden generar alertas, prealertas o consultas de datos segun el caso.
+Requisitos:
 
-## Arquitectura resumida
+- JDK con JavaFX configurado.
+- Driver MariaDB disponible en el entorno.
+- Instancia MariaDB accesible con la configuracion indicada en `DBConnection.java`.
 
-La aplicacion sigue una organizacion basada en capas sencillas:
+El proyecto esta organizado para ejecutarse desde IntelliJ IDEA con estructura basada en `src`.
 
-- `GUI/Views`: vistas FXML.
-- `GUI/controllers`: controladores JavaFX.
-- `Resources`: logica de dominio, simuladores, modelos y acceso a datos.
-- `Services`: servicios de aplicacion que coordinan ciertas operaciones.
+## Notas
 
-En el estado actual del proyecto se ha migrado gran parte de la interaccion de consola a flujos visibles dentro de la interfaz grafica.
-
-## Requisitos para ejecutar
-
-Requisitos generales:
-
-- JDK compatible con JavaFX
-- Librerias JavaFX configuradas en el entorno
-- Dependencias del proyecto disponibles en el IDE o en el sistema de compilacion utilizado
-- Acceso a la base de datos si se quiere usar la parte persistente completa
-
-El proyecto se ha trabajado en IntelliJ IDEA con estructura basada en `src` y recursos locales.
-
-## Recursos de datos
-
-El proyecto incluye recursos locales relevantes, por ejemplo:
-
-- `src/Resources/Location/Centers.json` para centros de emergencia.
-- Archivos de log generados por algunas operaciones.
-- Clases de acceso a base de datos para usuarios, contactos, emergencias e informacion medica.
-
-## Estado actual
-
-Actualmente la aplicacion dispone de:
-
-- Vista principal con menu lateral y dashboard de inicio.
-- Modulos de emergencia, peligro, salud, voz y centros integrados en UI.
-- Popup modal global para la alerta de peligro.
-- Flujo de historial medico con formulario plegable para alta de contactos.
-- Escena base de configuracion accesible desde el menu.
-
-Pendientes habituales de evolucion:
-
-- Compilacion y empaquetado automatizados con una herramienta de build unificada.
-- Integrar sensores o servicios externos reales en lugar de simulaciones.
-- Añadir pruebas automatizadas de interfaz y logica.
-- Profundizar la escena de configuracion con opciones persistentes.
+- El modulo de reservas inicializa y siembra su propio catalogo desde el codigo al cargarse.
+- El resto de tablas de negocio se asumen existentes; por eso se incluye el script completo en `Docs/database/mariadb-full-schema.sql`.
+- No hay una herramienta de build unificada en el repositorio.
 
 ## Autor
 

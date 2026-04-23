@@ -107,8 +107,11 @@
 
 .module-page .text-field,
 .module-page .password-field,
+.module-page .combo-box,
+.module-page .date-picker,
 .module-page .text-area,
-.module-page .list-view {
+.module-page .list-view,
+.module-page .table-view {
     -fx-background-color: rgba(255,255,255,0.95);
     -fx-border-color: #d7e0ea;
     -fx-border-radius: 12;
@@ -118,20 +121,51 @@
 }
 
 .module-page .text-field,
-.module-page .password-field {
+.module-page .password-field,
+.module-page .combo-box,
+.module-page .date-picker {
     -fx-padding: 11 14 11 14;
 }
 
 .module-page .text-field:focused,
 .module-page .password-field:focused,
-.module-page .text-area:focused {
+.module-page .combo-box:focused,
+.module-page .date-picker:focused,
+.module-page .text-area:focused,
+.module-page .table-view:focused {
     -fx-border-color: #60a5fa;
 }
 
 .module-page .text-area .content,
-.module-page .list-view {
+.module-page .list-view,
+.module-page .table-view {
     -fx-background-color: rgba(255,255,255,0.95);
     -fx-background-radius: 12;
+}
+
+.module-page .table-view .column-header-background {
+    -fx-background-color: linear-gradient(to right, #eff6ff, #e0f2fe);
+    -fx-background-radius: 12 12 0 0;
+}
+
+.module-page .table-view .column-header,
+.module-page .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #d7e0ea transparent;
+}
+
+.module-page .table-view .table-row-cell {
+    -fx-background-color: rgba(255,255,255,0.95);
+    -fx-border-color: transparent transparent #eef2f7 transparent;
+}
+
+.module-page .table-view .table-row-cell:selected {
+    -fx-background-color: #dbeafe;
+}
+
+.module-page .combo-box .list-cell,
+.module-page .date-picker .text-field {
+    -fx-text-fill: #0f172a;
 }
 
 .module-page .button {

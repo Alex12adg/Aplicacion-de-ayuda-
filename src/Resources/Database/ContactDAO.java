@@ -15,7 +15,7 @@ public class ContactDAO {
 
         List<Contact> contacts = new ArrayList<>();
         String sql = """
-            SELECT contact_name, contact_phone, relation
+            SELECT id, contact_name, contact_phone, relation
             FROM contacts
             WHERE user_id = ?
             ORDER BY id
@@ -29,6 +29,7 @@ public class ContactDAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     contacts.add(new Contact(
+                            rs.getInt("id"),
                             rs.getString("contact_name"),
                             rs.getString("contact_phone"),
                             rs.getString("relation")
@@ -54,6 +55,23 @@ public class ContactDAO {
             stmt.setString(2, name);
             stmt.setString(3, phone);
             stmt.setString(4, relation);
+
+            return stmt.executeUpdate() > 0;
+        }
+    }
+
+    public boolean deleteContact(int userId, int contactId) throws SQLException {
+
+        String sql = """
+            DELETE FROM contacts
+            WHERE id = ? AND user_id = ?
+        """;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, contactId);
+            stmt.setInt(2, userId);
 
             return stmt.executeUpdate() > 0;
         }

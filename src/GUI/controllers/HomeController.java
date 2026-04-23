@@ -15,6 +15,7 @@ public class HomeController {
     private Runnable openHealthAction;
     private Runnable openVoiceAction;
     private Runnable openDangerAction;
+    private Runnable openReservationsAction;
     private Runnable openCentersAction;
     private Runnable openMedicalAction;
     private Runnable openSettingsAction;
@@ -22,7 +23,7 @@ public class HomeController {
     @FXML
     public void initialize() {
         welcomeTitleLabel.setText("Panel de asistencia");
-        welcomeSubtitleLabel.setText("Accede rapidamente a los modulos principales de seguridad, salud y configuracion.");
+        welcomeSubtitleLabel.setText("Accede rapidamente a emergencias, historial medico y reservas de atencion desde un mismo panel.");
     }
 
     public void setWelcomeName(String name) {
@@ -35,6 +36,7 @@ public class HomeController {
             Runnable openHealthAction,
             Runnable openVoiceAction,
             Runnable openDangerAction,
+            Runnable openReservationsAction,
             Runnable openCentersAction,
             Runnable openMedicalAction,
             Runnable openSettingsAction
@@ -43,6 +45,7 @@ public class HomeController {
         this.openHealthAction = openHealthAction;
         this.openVoiceAction = openVoiceAction;
         this.openDangerAction = openDangerAction;
+        this.openReservationsAction = openReservationsAction;
         this.openCentersAction = openCentersAction;
         this.openMedicalAction = openMedicalAction;
         this.openSettingsAction = openSettingsAction;
@@ -66,6 +69,11 @@ public class HomeController {
     @FXML
     private void openDanger() {
         runAction(openDangerAction);
+    }
+
+    @FXML
+    private void openReservations() {
+        runAction(openReservationsAction);
     }
 
     @FXML

@@ -46,7 +46,7 @@ public class MedicalFormController {
     private TextField contactRelationField;
 
     @FXML
-    private ListView<String> contactsList;
+    private ListView<Contact> contactsList;
 
     @FXML
     private Label statusLabel;
@@ -64,10 +64,13 @@ public class MedicalFormController {
     private Button saveButton;
 
     @FXML
+    private Button deleteContactButton;
+
+    @FXML
     private VBox contactFormBox;
 
     private final MedicalService medicalService;
-    private final ObservableList<String> contactItems;
+    private final ObservableList<Contact> contactItems;
     private final List<Contact> pendingContacts;
     private boolean editMode;
 
@@ -130,7 +133,7 @@ public class MedicalFormController {
 
             Contact contact = new Contact(name, phone, relation);
             pendingContacts.add(contact);
-            contactItems.add(formatContact(contact));
+            contactItems.add(contact);
             clearContactInputs();
             contactFormBox.setVisible(false);
             contactFormBox.setManaged(false);
@@ -189,6 +192,40 @@ public class MedicalFormController {
         }
     }
 
+    @FXML
+    public void handleDeleteContact() {
+        try {
+            if (!editMode) {
+                throw new Exception("Activa primero el modo edicion");
+            }
+
+            Contact selectedContact = contactsList.getSelectionModel().getSelectedItem();
+
+            if (selectedContact == null) {
+                throw new Exception("Selecciona un contacto para borrar");
+            }
+
+            if (selectedContact.getId() <= 0) {
+                pendingContacts.remove(selectedContact);
+                contactItems.remove(selectedContact);
+                statusLabel.setText("Contacto pendiente eliminado");
+                return;
+            }
+
+            UserData user = UserSession.getUser();
+
+            if (user == null || user.getId() <= 0) {
+                throw new Exception("No hay usuario en sesion");
+            }
+
+            medicalService.deleteContact(user.getId(), selectedContact.getId());
+            loadContacts();
+            statusLabel.setText("Contacto borrado correctamente");
+        } catch (Exception e) {
+            statusLabel.setText(e.getMessage());
+        }
+    }
+
     private void savePendingContacts(int userId) throws Exception {
         for (Contact contact : pendingContacts) {
             medicalService.addContact(
@@ -231,9 +268,10 @@ public class MedicalFormController {
         List<Contact> contacts = medicalService.getContacts(user.getId());
 
         contactItems.clear();
+        contactItems.addAll(pendingContacts);
 
         for (Contact contact : contacts) {
-            contactItems.add(formatContact(contact));
+            contactItems.add(contact);
         }
     }
 
@@ -246,6 +284,7 @@ public class MedicalFormController {
         contactPhoneField.setDisable(!editMode);
         contactRelationField.setDisable(!editMode);
         addContactButton.setDisable(!editMode);
+        deleteContactButton.setDisable(!editMode);
         toggleContactFormButton.setDisable(!editMode);
         saveButton.setDisable(!editMode);
 
@@ -254,16 +293,6 @@ public class MedicalFormController {
             contactFormBox.setManaged(false);
             toggleContactFormButton.setText("Mostrar formulario de contacto");
         }
-    }
-
-    private String formatContact(Contact contact) {
-        String relation = nullSafe(contact.getRelation());
-
-        if (relation.isBlank()) {
-            relation = "Sin relacion indicada";
-        }
-
-        return contact.getName() + " | " + contact.getPhone() + " | " + relation;
     }
 
     private void clearContactInputs() {

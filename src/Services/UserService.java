@@ -49,4 +49,85 @@ public class UserService {
 
         return createdUser;
     }
+
+    public UserData updateAccount(UserData currentUser, String currentPassword, String newName,
+                                  String newEmail, String newPassword) throws Exception {
+
+        if (currentUser == null || currentUser.getId() <= 0) {
+            throw new Exception("No hay usuario en sesion");
+        }
+
+        if (currentPassword == null || currentPassword.isBlank()) {
+            throw new Exception("Debes introducir la contrasena actual");
+        }
+
+        if (!userDAO.verifyPassword(currentUser.getId(), currentPassword)) {
+            throw new Exception("La contrasena actual no es correcta");
+        }
+
+        String finalName = normalizeOrFallback(newName, currentUser.getNombre());
+        String finalEmail = normalizeOrFallback(newEmail, currentUser.getEmail());
+        String finalPassword = normalizeOrFallback(newPassword, currentUser.getPassword());
+
+        if (finalName.isBlank()) {
+            throw new Exception("El nombre no puede quedar vacio");
+        }
+
+        if (finalEmail.isBlank()) {
+            throw new Exception("El correo electronico no puede quedar vacio");
+        }
+
+        if (finalPassword.length() < 4) {
+            throw new Exception("La nueva contrasena debe tener al menos 4 caracteres");
+        }
+
+        boolean sameName = finalName.equals(currentUser.getNombre());
+        boolean sameEmail = finalEmail.equals(currentUser.getEmail());
+        boolean samePassword = finalPassword.equals(currentUser.getPassword());
+
+        if (sameName && sameEmail && samePassword) {
+            throw new Exception("No hay cambios para guardar");
+        }
+
+        if (userDAO.emailExistsForOtherUser(currentUser.getId(), finalEmail)) {
+            throw new Exception("Ese correo electronico ya esta en uso");
+        }
+
+        UserData updatedUser = userDAO.updateAccount(currentUser.getId(), finalName, finalEmail, finalPassword);
+
+        if (updatedUser == null) {
+            throw new Exception("No se pudo actualizar la cuenta");
+        }
+
+        return updatedUser;
+    }
+
+    public void deleteAccount(UserData currentUser, String currentPassword) throws Exception {
+
+        if (currentUser == null || currentUser.getId() <= 0) {
+            throw new Exception("No hay usuario en sesion");
+        }
+
+        if (currentPassword == null || currentPassword.isBlank()) {
+            throw new Exception("Debes introducir la contrasena actual");
+        }
+
+        if (!userDAO.verifyPassword(currentUser.getId(), currentPassword)) {
+            throw new Exception("La contrasena actual no es correcta");
+        }
+
+        boolean deleted = userDAO.deleteUserAccount(currentUser.getId());
+
+        if (!deleted) {
+            throw new Exception("No se pudo eliminar la cuenta");
+        }
+    }
+
+    private String normalizeOrFallback(String value, String fallback) {
+        if (value == null || value.isBlank()) {
+            return fallback == null ? "" : fallback.trim();
+        }
+
+        return value.trim();
+    }
 }

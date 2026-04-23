@@ -28,6 +28,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class MainController {
 
@@ -101,10 +102,18 @@ public class MainController {
                         () -> loadProtectedView("health-view.fxml"),
                         () -> loadProtectedView("voice-view.fxml"),
                         () -> loadView("Danger-view.fxml"),
+                        () -> loadProtectedView("Reservations-view.fxml"),
                         () -> loadProtectedView("Centers-view.fxml"),
                         () -> loadProtectedView("Medical-form-view.fxml"),
                         () -> loadProtectedView("Settings-view.fxml")
                 );
+            }
+
+            if (controller instanceof SettingsController) {
+                Consumer<String> profileNameUpdateHandler = updatedName -> usernameLabel.setText(
+                        updatedName == null || updatedName.isBlank() ? "Usuario" : updatedName
+                );
+                ((SettingsController) controller).setProfileNameUpdateHandler(profileNameUpdateHandler);
             }
 
             if (controller instanceof VoiceController) {
@@ -186,6 +195,11 @@ public class MainController {
     @FXML
     private void loadCenters() {
         loadProtectedView("Centers-view.fxml");
+    }
+
+    @FXML
+    private void loadReservations() {
+        loadProtectedView("Reservations-view.fxml");
     }
 
     @FXML

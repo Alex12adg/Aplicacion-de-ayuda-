@@ -29,14 +29,14 @@
                         <Label fx:id="welcomeSubtitleLabel" styleClass="home-hero-subtitle" text="Accede rapidamente a los modulos principales de seguridad, salud y configuracion." wrapText="true"/>
 
                         <VBox spacing="10">
-                            <Button text="Abrir emergencia" onAction="#openEmergency" styleClass="primary-action-button"/>
+                            <Button text="Abrir reservas" onAction="#openReservations" styleClass="primary-action-button"/>
                             <Button text="Ver configuracion" onAction="#openSettings" styleClass="home-outline-button"/>
                         </VBox>
                     </VBox>
 
                     <VBox spacing="12" styleClass="home-status-card">
                         <Label text="Estado del panel" styleClass="panel-title"/>
-                        <Label text="Todos los modulos principales ya se gestionan desde la interfaz grafica." wrapText="true"/>
+                        <Label text="La aplicacion ya centraliza modulos de ayuda, historial y nuevas reservas desde la interfaz grafica." wrapText="true"/>
                         <Label text="Usa este dashboard como punto de acceso rapido." styleClass="status-label" wrapText="true"/>
                     </VBox>
                 </VBox>
@@ -71,7 +71,14 @@
                     </VBox>
 
                     <VBox spacing="10" styleClass="home-module-card">
-                        <Label text="Centros cercanos" styleClass="home-card-title"/>
+                        <Label text="Reservas" styleClass="home-card-title"/>
+                        <Label text="Gestiona citas medicas, tramites en comisaria y servicios de atencion social." wrapText="true"/>
+                        <Region VBox.vgrow="ALWAYS"/>
+                        <Button text="Abrir modulo" onAction="#openReservations" styleClass="home-outline-button"/>
+                    </VBox>
+
+                    <VBox spacing="10" styleClass="home-module-card">
+                        <Label text="Centros" styleClass="home-card-title"/>
                         <Label text="Consulta centros disponibles y filtralos por radio de busqueda." wrapText="true"/>
                         <Region VBox.vgrow="ALWAYS"/>
                         <Button text="Abrir modulo" onAction="#openCenters" styleClass="home-outline-button"/>
