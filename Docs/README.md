@@ -104,7 +104,7 @@ Archivos:
 
 ### Historial medico y contactos
 
-- Guardado de alergias, condiciones y medicacion.
+- Guardado de alergias, condiciones y medicacion como listas por lineas.
 - Alta y borrado de contactos de emergencia.
 
 Archivos:
@@ -157,6 +157,9 @@ La conexion actual esta definida en `src/Resources/Database/DBConnection.java`:
 
 - `users`
 - `medical_info`
+- `medical_allergies`
+- `medical_conditions`
+- `medical_medications`
 - `contacts`
 - `emergencies`
 - `booking_resources`
@@ -165,7 +168,7 @@ La conexion actual esta definida en `src/Resources/Database/DBConnection.java`:
 ### Scripts disponibles
 
 - `Docs/database/mariadb-full-schema.sql`: esquema completo de la aplicacion con tablas, claves foraneas e insercion base de recursos reservables.
-- `Docs/database/reservas-module.sql`: script acotado al modulo de reservas.
+- `Docs/database/migrate-medical-info-to-lists.sql`: migracion desde el formato medico antiguo con columnas `VARCHAR` al formato actual basado en listas.
 
 ### Importacion recomendada
 
@@ -216,7 +219,7 @@ El proyecto esta organizado para ejecutarse desde IntelliJ IDEA con estructura b
 ## Notas
 
 - El modulo de reservas inicializa y siembra su propio catalogo desde el codigo al cargarse.
-- El resto de tablas de negocio se asumen existentes; por eso se incluye el script completo en `Docs/database/mariadb-full-schema.sql`.
+- El resto de tablas de negocio se asumen existentes; por eso el esquema de referencia queda centralizado en `Docs/database/mariadb-full-schema.sql`.
 - No hay una herramienta de build unificada en el repositorio.
 
 ## Autor

@@ -67,7 +67,7 @@
                     </VBox>
 
                     <HBox alignment="CENTER" spacing="12">
-                        <Button text="Registrarse" onAction="#handleRegister" styleClass="primary-action-button login-primary-button"/>
+                        <Button text="Registrarse" onAction="#handleRegister" styleClass="login-primary-button"/>
                         <Button text="Volver al login" onAction="#goToLogin" styleClass="login-secondary-button"/>
                     </HBox>
 

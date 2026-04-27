@@ -377,7 +377,22 @@
 }
 
 .login-primary-button {
+    -fx-background-color: linear-gradient(to right, #c2410c, #b91c1c);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 12 18 12 18;
     -fx-pref-width: 320;
+}
+
+.login-primary-button:hover {
+    -fx-background-color: linear-gradient(to right, #9a3412, #991b1b);
+}
+
+.login-primary-button .text {
+    -fx-fill: white;
 }
 
 .login-secondary-button {
